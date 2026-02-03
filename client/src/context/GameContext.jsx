@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useCallback } from 'react';
 import axios from 'axios';
 import { useAuth } from './AuthContext';
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = import.meta.env.VITE_API_URL;
 
 const GameContext = createContext(null);
 

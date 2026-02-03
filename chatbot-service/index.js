@@ -9,7 +9,10 @@ const PORT = process.env.PORT || 5001;
 // Initialize Gemini API
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || 'AIzaSy_FAKE_KEY');
 
-app.use(cors());
+app.use(cors({
+    origin: process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',') : '*',
+    credentials: true
+}));
 app.use(express.json());
 
 // System prompt for the cybersecurity assistant

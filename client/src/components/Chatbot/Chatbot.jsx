@@ -12,6 +12,7 @@ const Chatbot = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [isAvailable, setIsAvailable] = useState(true);
     const messagesEndRef = useRef(null);
+    const CHATBOT_URL = import.meta.env.VITE_CHATBOT_URL;
 
     const suggestedQuestions = [
         "What is Phishing?",
@@ -35,7 +36,7 @@ const Chatbot = () => {
     useEffect(() => {
         const checkHealth = async () => {
             try {
-                await axios.get('http://localhost:5001/api/health');
+                await axios.get(`${CHATBOT_URL}/health`);
                 setIsAvailable(true);
             } catch (err) {
                 setIsAvailable(false);
@@ -55,7 +56,7 @@ const Chatbot = () => {
         setIsLoading(true);
 
         try {
-            const response = await axios.post('http://localhost:5001/api/chat', { message: messageText });
+            const response = await axios.post(`${CHATBOT_URL}/chat`, { message: messageText });
             setMessages(prev => [...prev, { text: response.data.response, sender: 'bot' }]);
         } catch (error) {
             const errorMsg = error.response ? "I'm having trouble thinking right now. Please try again!" : "Cyber Assistant is currently unavailable";
